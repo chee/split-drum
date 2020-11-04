@@ -45,8 +45,8 @@ Path(target_dir).mkdir(parents=True, exist_ok=True)
 
 loop = asyncio.get_event_loop()
 for index in range(len(json['start'])):
-    start = json['start'][index] / 41000 / 4096
-    end = json['end'][index] / 41000 / 4096
+    start = json['start'][index] / 4096 / 44100
+    end = json['end'][index] / 4096 / 44100
     loop.run_until_complete(FFmpeg().option('y').input(aif).output(
         f"{target_dir}/{index}.wav",
         ss=start,
