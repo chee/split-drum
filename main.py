@@ -48,9 +48,9 @@ for index in range(len(json['start'])):
     start = json['start'][index] / 4096 / 44100
     end = json['end'][index] / 4096 / 44100
     loop.run_until_complete(FFmpeg().option('y').input(aif).output(
-        f"{target_dir}/{index}.wav",
-        ss=start,
-        to=end
+        f"{target_dir}/{index:02d}.wav",
+        ss=(start),
+        to=(end)
     ).execute())
 
 loop.close
