@@ -35,7 +35,9 @@ def get_aif_json(path):
             aif.close()
             return None
 aif = argv[1]
-target_dir = argv[2] or "."
+target_dir = "."
+if len(argv) > 2:
+    target_dir = argv[2]
 json = get_aif_json(aif)
 samples = []
 
