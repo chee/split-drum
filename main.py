@@ -6,23 +6,18 @@ from pathlib import Path
 from ffmpeg import FFmpeg
 import asyncio
 
+# i've taken this from here
+# https://github.com/possan/op1-to-ableton-drumrack/blob/master/convert.py
 def get_aif_json(path):
     aif = open(path, "rb")
-    data = aif.read(4)
-    if data != b'FORM':
-        aif.close()
-        return None
-    data = aif.read(4)
-    data = aif.read(4)
-    if data != b'AIFF' and data != b'AIFC':
-        aif.close()
-        return None
+    # i don't care about the first 12 bytes
+    aif.read(12)
     for _ in range(10):
         try:
             chunk = Chunk(aif)
             if chunk.getname() == b'APPL':
-                data = chunk.read(4)
-                if data == b'op-1':
+                header = chunk.read(4)
+                if header == b'op-1':
                     json = parse_json(
                         chunk.read(
                             chunk.getsize() - 4
@@ -34,6 +29,7 @@ def get_aif_json(path):
         except EOFError:
             aif.close()
             return None
+
 aif = argv[1]
 target_dir = "."
 if len(argv) > 2:
