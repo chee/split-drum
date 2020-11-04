@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from json import loads as parse_json
 from chunk import Chunk
 from sys import argv
